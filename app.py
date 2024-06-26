@@ -1,13 +1,11 @@
 from flask import Flask, request, render_template, jsonify
+import joblib
 import pandas as pd
-from tensorflow.keras.models import load_model
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
 
-# Cargar el modelo entrenado (Asegúrate de que el modelo está guardado en formato adecuado para Keras)
-model = load_model('modelo_paris.h5')
+# Cargar el modelo entrenado
+model = joblib.load('modelo_paris.pkl')
 
 @app.route('/')
 def home():
@@ -33,10 +31,10 @@ def predict():
         data_df = pd.DataFrame(data)
 
         # Realizar predicciones
-        prediction = model.predict(data_df)[0][0]  # Ajustar según la forma de salida del modelo
+        prediction = model.predict(data_df)
 
         # Devolver la predicción como JSON
-        return jsonify({'prediction': prediction})
+        return jsonify({'prediction': prediction[0]})
     except Exception as e:
         # Devuelve un mensaje de error más útil
         return jsonify({'error': str(e)}), 400
