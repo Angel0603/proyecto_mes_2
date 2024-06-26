@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template, jsonify
 import pandas as pd
 from tensorflow.keras.models import load_model
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Cargar el modelo entrenado (Asegúrate de que el modelo está guardado en formato adecuado para Keras)
 model = load_model('modelo_paris.h5')
