@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Clasificador de Propiedades</title>
+    <title>Predicción de precios de casas en Paris</title>
     <script>
         function enviarDatos(event) {
             event.preventDefault(); // Evitar el envío tradicional del formulario
             const squareMeters = document.getElementById('squareMeters').value;
-            const garage = document.getElementById('garage').value;
             const basement = document.getElementById('basement').value;
             const attic = document.getElementById('attic').value;
-            const floors = document.getElementById('floors').value;
             const cityCode = document.getElementById('cityCode').value;
 
             fetch('/predict', {
@@ -17,11 +15,11 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `squareMeters=${squareMeters}&garage=${garage}&basement=${basement}&attic=${attic}&floors=${floors}&cityCode=${cityCode}`,
+                body: `squareMeters=${squareMeters}&basement=${basement}&attic=${attic}&cityCode=${cityCode}`,
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('resultado').innerText = 'Predicción: ' + data.prediction;
+                document.getElementById('resultado').innerText = 'Precio: $' + data.prediction;
             })
             .catch(error => {
                 document.getElementById('resultado').innerText = 'Error en la solicitud.';
@@ -31,18 +29,14 @@
     </script>
 </head>
 <body>
-    <h1>Clasificador de Propiedades</h1>
+    <h1>Predicción de precios de casas en Paris</h1>
     <form id="formulario" onsubmit="enviarDatos(event)">
         <label for="squareMeters">Metros Cuadrados:</label>
-        <input type="text" id="squareMeters" name="squareMeters"><br><br>
-        <label for="garage">Garaje:</label>
-        <input type="text" id="garage" name="garage"><br><br>
+        <input type="text" id="squareMeters" name="squareMeters"><br><br
         <label for="basement">Sótano:</label>
         <input type="text" id="basement" name="basement"><br><br>
         <label for="attic">Ático:</label>
-        <input type="text" id="attic" name="attic"><br><br>
-        <label for="floors">Pisos:</label>
-        <input type="text" id="floors" name="floors"><br><br>
+        <input type="text" id="attic" name="attic"><br><br
         <label for="cityCode">Código de Ciudad:</label>
         <input type="text" id="cityCode" name="cityCode"><br><br>
         <input type="submit" value="Enviar">

@@ -16,20 +16,16 @@ def home():
 def predict():
     try:
         # Recolectar valores del formulario
-        squareMeters = float(request.form.get('squareMeters', 0))
-        garage = float(request.form.get('garage', 0))
-        basement = float(request.form.get('basement', 0))
-        attic = float(request.form.get('attic', 0))
-        floors = float(request.form.get('floors', 0))
-        cityCode = float(request.form.get('cityCode', 0))
+        squareMeters = float(request.form.get('squareMeters'))
+        basement = float(request.form.get('basement'))
+        attic = float(request.form.get('attic'))
+        cityCode = float(request.form.get('cityCode'))
 
         # Crear DataFrame con los datos recolectados
         data = {
             'squareMeters': [squareMeters],
-            'garage': [garage],
             'basement': [basement],
             'attic': [attic],
-            'floors': [floors],
             'cityCode': [cityCode],
         }
         data_df = pd.DataFrame(data)
